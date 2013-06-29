@@ -1,0 +1,8 @@
+# Read about factories at https://github.com/thoughtbot/factory_girl
+
+FactoryGirl.define do
+  factory :technology do
+    name "Ruby"
+    abbreviation "ruby"
+  end
+end
