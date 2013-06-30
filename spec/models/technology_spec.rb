@@ -27,6 +27,8 @@ describe Technology do
     it "should have_many projects" do
       project = FactoryGirl.create(:project)
       tech.projects << project
+      tech.save
+      tech.reload
       tech.projects.first.should == project
     end
     
