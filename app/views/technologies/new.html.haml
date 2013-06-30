@@ -4,11 +4,4 @@
   %h1 Add New Technology
 
 %section
-  = form_for @technology do |f|
-    %label
-      %strong Name: 
-      = f.text_field :name
-    %label
-      %strong Abbreviation: 
-      = f.text_field :abbreviation
-    = f.submit
+  = render "technology_form", technology: @technology
