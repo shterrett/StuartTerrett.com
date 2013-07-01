@@ -1,0 +1,7 @@
+= content_for(:title) { "New Project" }
+
+%header
+  %h1 New Project
+  
+%section
+  = render "project_form", project: @project
