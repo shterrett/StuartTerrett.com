@@ -1,11 +1,12 @@
 = content_for(:title) { "Technologies List" }
 
-%header
-  %h1 All Technologies
-
 %section
-  - @technologies.each_slice(6) do |techs|
-    %div.row
-      - techs.each do |tech|
-        %div.large-2.small-4.columns
-          = link_to tech.name, technology_path(tech)
+  %header
+    %h1 All Technologies
+
+  %section
+    - @technologies.each_slice(6) do |techs|
+      %div.row
+        - techs.each do |tech|
+          %div.large-2.small-4.columns
+            = link_to tech.name, technology_path(tech)
