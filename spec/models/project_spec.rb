@@ -39,4 +39,18 @@ describe Project do
     
   end
   
+  describe "source code links" do
+    
+    it "should return a link to the source if open/exists" do
+      project = FactoryGirl.create(:project)
+      project.source_link.should == "<a href='#{project.source}'>View Source</a>".html_safe
+    end
+    
+    it "should return 'Closed Source' if source is 'Closed' or doesn't exist'" do
+      project = FactoryGirl.create(:closed_project)
+      project.source_link.should == "Closed Source"
+    end
+    
+  end
+  
 end
