@@ -7,6 +7,7 @@ feature "New Projects" do
     page.should have_field "Name"
     page.should have_field "Description"
     page.should have_field "Short Description"
+    page.should have_field "project_source"
     page.should have_select "project_technologies"
     page.should have_button "Create Project"
   end
@@ -92,6 +93,7 @@ feature "View Projects" do
     visit "/projects/#{project.id}"
     page.should have_text project.name
     page.should have_text project.description
+    page.html.should include(project.source_link)
     project.technologies.each do |pt|
       page.should have_link pt.name, href: technology_path(pt)
     end
@@ -103,6 +105,7 @@ feature "View Projects" do
     projects.each do |proj|
       page.should have_text proj.name
       page.should have_text proj.short_description
+      page.html.should include(proj.source_link)
     end
     Technology.all.each do |tech|
       page.should have_text tech.name

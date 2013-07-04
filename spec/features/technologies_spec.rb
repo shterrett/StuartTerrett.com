@@ -6,6 +6,7 @@ feature "New Technology" do
     visit '/technologies/new'
     page.should have_field "Name"
     page.should have_field "Abbreviation"
+    page.should have_field "technology_description"
     page.should have_button "Create Technology"
   end
   
@@ -60,6 +61,7 @@ feature "View Technology" do
     tech = Technology.all.last
     visit "/technologies/#{tech.id}"
     page.should have_text tech.name
+    page.should have_text tech.description
     tech.projects.each do |proj|
       page.should have_link proj.name, href: project_path(proj)
     end

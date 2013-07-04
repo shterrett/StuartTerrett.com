@@ -10,6 +10,8 @@
       %div.small-12.large-8.columns
         %article
           = @project.description
+        %aside
+          = @project.source_link
       %div.small-12.large-4.columns
         = render "technologies/technology_list", technologies: @technologies, title: "Technologies Used:"
  

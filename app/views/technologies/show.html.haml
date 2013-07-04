@@ -6,6 +6,8 @@
       = @technology.name
     
   %section
+    %article
+      = @technology.description
     %div.row
       %div.large-8.small-12.columns
         = render "projects/project_list", all_projects: @projects

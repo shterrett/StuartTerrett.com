@@ -23,7 +23,14 @@
   %div.row
     %div.large-3.columns
       %label
-        %strong Technologies
+        %strong Source: 
+    %div.large-6.columns
+      =f.text_field :source, { placeholder: "Link to source or \"Closed\"" }
+    %div.large-3.columns
+  %div.row
+    %div.large-3.columns
+      %label
+        %strong Technologies:
     %div.large-6.columns
       = f.collection_select :technologies, @technologies, 'id', 'name', { selected: @project_technology_ids }, { multiple: "multiple" }
     %div.large-3.columns
