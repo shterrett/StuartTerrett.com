@@ -46,3 +46,32 @@ feature "Edit Technology" do
   end
   
 end
+
+feature "View Technology" do
+  before(:all) do 
+    tech = FactoryGirl.create(:technology)
+    project = FactoryGirl.create(:project)
+    project_2 = FactoryGirl.create(:project)
+    ProjectTech.create({ technology_id: tech.id, project_id: project.id })
+    ProjectTech.create({ technology_id: tech.id, project_id: project_2.id })
+  end
+  
+  scenario "visit show technology page" do
+    tech = Technology.all.last
+    visit "/technologies/#{tech.id}"
+    page.should have_text tech.name
+    tech.projects.each do |proj|
+      page.should have_link proj.name, href: project_path(proj)
+    end
+  end
+  
+  scenario "visit technology index page" do
+    techs = Technology.all
+    visit "/technologies/"
+    techs.each do |tech|
+      page.should have_link tech.name, href: technology_path(tech)
+    end
+  end
+  
+end
+  

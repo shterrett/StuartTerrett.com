@@ -1,0 +1,11 @@
+= content_for(:title) { "Project List" }
+
+%header
+  %h1 Project List
+
+%section
+  %div.row
+    %div.large-8.small-12.columns
+      = render "projects/project_list", all_projects: @projects
+    %div.large-4.small-12.columns
+      = render "technologies/technology_list", technologies: @technologies, title: "Technologies"

@@ -18,6 +18,8 @@ class ProjectsController < ApplicationController
   end
   
   def show
+    @project = Project.find(params[:id])
+    @technologies = @project.technologies
   end
   
   def edit
@@ -36,6 +38,11 @@ class ProjectsController < ApplicationController
       flash[:error] = "There was an error updating the project"
       render 'edit'
     end
+  end
+  
+  def index
+    @projects = Project.all
+    @technologies = Technology.all
   end
   
   def project_params

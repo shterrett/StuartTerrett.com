@@ -2,7 +2,7 @@
 
 FactoryGirl.define do
   factory :technology do
-    name "Ruby"
+    sequence(:name) { |n| "Language-#{n}" }
     abbreviation "ruby"
   end
 end

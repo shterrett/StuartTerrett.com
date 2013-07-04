@@ -1,0 +1,4 @@
+- all_projects.each_slice(2) do |projects|
+  %div.row
+    - projects.each do |project|
+      = render "projects/project_cell", project: project

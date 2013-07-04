@@ -15,6 +15,11 @@ class TechnologiesController < ApplicationController
     end
   end
   
+  def show
+    @technology = Technology.find(params[:id])
+    @projects = @technology.projects
+  end
+  
   def edit
     @technology = Technology.find(params[:id])
   end
@@ -28,6 +33,10 @@ class TechnologiesController < ApplicationController
       flash[:error] = "There was an error updating the technology"
       render 'edit'
     end
+  end
+  
+  def index
+    @technologies = Technology.all
   end
   
   def tech_params

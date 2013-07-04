@@ -1,0 +1,7 @@
+%ul
+  %header
+    %h1
+      = title
+  - technologies.each do |tech|
+    %li
+      = link_to tech.name, technology_path(tech)

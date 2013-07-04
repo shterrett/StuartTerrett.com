@@ -76,5 +76,39 @@ feature "Edit Projects" do
   end
   
 end
+
+feature "View Projects" do
   
+  before(:all) do
+    project = FactoryGirl.create(:project)
+    tech_1 = FactoryGirl.create(:technology)
+    tech_2 = Technology.create({ name: "Python", abbreviation: "python" })
+    ProjectTech.create({ project_id: project.id, technology_id: tech_1.id })
+    ProjectTech.create({ project_id: project.id, technology_id: tech_2.id })
+  end
+  
+  scenario "Visit Show Projects Page" do
+    project = Project.all.last
+    visit "/projects/#{project.id}"
+    page.should have_text project.name
+    page.should have_text project.description
+    project.technologies.each do |pt|
+      page.should have_link pt.name, href: technology_path(pt)
+    end
+  end
+  
+  scenario "Visit the Index Page" do
+    projects = Project.all
+    visit "/projects"
+    projects.each do |proj|
+      page.should have_text proj.name
+      page.should have_text proj.short_description
+    end
+    Technology.all.each do |tech|
+      page.should have_text tech.name
+    end
+  end
+  
+end
+    
   
