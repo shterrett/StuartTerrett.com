@@ -8,7 +8,7 @@
     %ul.left
       %li.divider
       %li
-        %a(href="#") Projects
+        = link_to "Projects", projects_path
       %li.divider
       %li
         %a(href="#") About
@@ -18,5 +18,5 @@
       %li.divider
       %li
         %a(href="#") Contact
-      %li#language-link
-        %a(href="#language-bar") Technologies &#x25BC;
+      %li
+        = link_to "Technologies", technologies_path
