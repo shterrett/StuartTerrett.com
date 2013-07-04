@@ -7,6 +7,7 @@ feature "New Projects" do
     page.should have_field "Name"
     page.should have_field "Description"
     page.should have_field "Short Description"
+    page.should have_select "project_technologies"
     page.should have_button "Create Project"
   end
   
@@ -37,7 +38,16 @@ feature "Edit Projects" do
     page.should have_field "Name"
     page.should have_field "Description"
     page.should have_field "Short Description"
+    page.should have_select "project_technologies"
     page.should have_button "Update Project"
+  end
+  
+  scenario "Technology should be selected" do
+    tech = FactoryGirl.create(:technology)
+    project = Project.all.last
+    ProjectTech.create({ technology_id: tech.id, project_id: project.id })
+    visit "/projects/#{project.id}/edit"
+    page.should have_select "project_technologies", selected: tech.name
   end
   
   scenario "Edit a project" do
@@ -48,6 +58,21 @@ feature "Edit Projects" do
     edited_project = Project.find(project.id)
     edited_project.name.should == "EditedName"
     page.should have_text "Project updated successfully"
+  end
+  
+  scenario "Edit the list of technologies" do
+    project = Project.all.first
+    tech = FactoryGirl.create(:technology)
+    tech_2 = FactoryGirl.build(:technology)
+    tech_2.name = "New Technology"
+    tech_2.save
+    ProjectTech.create({ technology_id: tech.id, project_id: project.id })
+    visit "/projects/#{project.id}/edit"
+    unselect tech.name, from: "project_technologies"
+    select tech_2.name, from: "project_technologies"
+    click_button "Update Project"
+    project.technologies.should include(tech_2)
+    project.technologies.should_not include(tech)
   end
   
 end

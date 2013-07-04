@@ -25,7 +25,7 @@
       %label
         %strong Technologies
     %div.large-6.columns
-      = f.collection_select :technologies, @technologies, 'id', 'name', {}, { multiple: "multiple" }
+      = f.collection_select :technologies, @technologies, 'id', 'name', { selected: @project_technology_ids }, { multiple: "multiple" }
     %div.large-3.columns
   %div.row
     %div.large-6.large-centered.small-6.small-centered.columns

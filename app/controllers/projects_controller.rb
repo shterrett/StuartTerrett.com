@@ -22,12 +22,14 @@ class ProjectsController < ApplicationController
   
   def edit
     @project = Project.find(params[:id])
+    @project_technology_ids = @project.technologies.pluck(:id)
     @technologies = Technology.all
   end
   
   def update
     @project = Project.find(params[:id])
     if @project.update_attributes(project_params)
+      update_project_techs(@project, params[:project][:technologies])
       flash[:success] = "Project updated successfully"
       redirect_to project_path(@project)
     else
@@ -44,6 +46,14 @@ class ProjectsController < ApplicationController
     technologies.each do |id|
       ProjectTech.create({ project_id: project.id, technology_id: id })
     end
+  end
+  
+  def update_project_techs(project, technologies)
+    existing_ids = ProjectTech.where(project_id: project.id).pluck(:technology_id)
+    to_delete = existing_ids - technologies
+    to_create = technologies - existing_ids
+    create_project_techs(project, to_create)
+    ProjectTech.where(project_id: project.id, technology_id: to_delete).destroy_all
   end
   
 end
