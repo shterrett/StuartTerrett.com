@@ -16,4 +16,19 @@ describe Employment do
     
   end
   
+  describe "Sorting" do
+    
+    before(:all) do
+      10.times { FactoryGirl.create(:employment) }
+    end
+    after(:all) { Employment.destroy_all }
+    
+    it "should automatically sort by descending start date" do
+      employments = Employment.all
+      employments[0].start_date.should > employments[1].start_date
+      employments[6].start_date.should > employments[7].start_date
+    end
+    
+  end
+  
 end

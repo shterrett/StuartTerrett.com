@@ -53,4 +53,23 @@ feature "Edit Employment" do
   end
   
 end
+
+feature "Resume" do
+  
+  before(:all) do
+    10.times { FactoryGirl.create(:employment) }
+  end
+  after(:all) { Employment.destroy_all }
+  
+  scenario "Visit Resume page" do
+    visit "/resume"
+    employment = Employment.all
+    employment.each do |empl|
+      page.should have_text empl.company
+      page.should have_text empl.start_date
+      page.should have_text empl.description
+    end
+  end
+  
+end
     

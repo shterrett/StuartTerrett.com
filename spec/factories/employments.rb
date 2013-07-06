@@ -5,8 +5,8 @@ FactoryGirl.define do
     company "Camelot"
     position "Archmage of the realm"
     description "MyText"
-    start_date "1065-01-06"
-    end_date "1200-01-06"
+    sequence(:start_date) { |n| "#{1199 + n}-01-06" }
+    sequence(:end_date) { |n| "#{1200 + n}-01-06" }
     url "http://google.com"
   end
 end

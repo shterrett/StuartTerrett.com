@@ -1,0 +1,9 @@
+= content_for(:title) { "Resumé" }
+
+%section
+  %header
+    %h1 Resumé
+    
+  %section
+    - @employments.each do |employment|
+      = render "employment", employment: employment
