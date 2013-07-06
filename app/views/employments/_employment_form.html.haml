@@ -1,0 +1,46 @@
+= form_for employment do |f|
+  %div.row
+    %div.large-3.columns
+      %label
+        %strong Company: 
+    %div.large-6.columns
+      = f.text_field :company, { placeholder: "Company" }
+    %div.large-3.columns
+  %div.row
+    %div.large-3.columns
+      %label
+        %strong Position: 
+    %div.large-6.columns
+      = f.text_field :position, { placeholder: "Position" }
+    %div.large-3.columns
+  %div.row
+    %div.large-3.columns
+      %label
+        %strong Description:
+    %div.large-6.columns
+      =f.text_area :description, { placeholder: "Describe job" }
+    %div.large-3.columns
+  %div.row
+    %div.large-3.columns
+      %label
+        %strong Start Date:
+    %div.large-6.columns
+      =f.date_field :start_date, { placeholder: "Start" }
+    %div.large-3.columns
+  %div.row
+    %div.large-3.columns
+      %label
+        %strong End Date:
+    %div.large-6.columns
+      =f.date_field :end_date, { placeholder: "End" }
+    %div.large-3.columns
+  %div.row
+    %div.large-3.columns
+      %label
+        %strong Website:
+    %div.large-6.columns
+      =f.text_field :url, { placeholder: "http://cool-job.com" }
+    %div.large-3.columns
+  %div.row
+    %div.large-6.large-centered.small-6.small-centered.columns
+      = f.submit

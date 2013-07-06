@@ -5,7 +5,8 @@ FactoryGirl.define do
     company "Camelot"
     position "Archmage of the realm"
     description "MyText"
-    start_date "Fall 1056"
-    end_date "Current"
+    start_date "1065-01-06"
+    end_date "1200-01-06"
+    url "http://google.com"
   end
 end

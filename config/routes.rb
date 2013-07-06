@@ -3,6 +3,9 @@ StuartTerrett::Application.routes.draw do
   resources :technologies
   
   resources :projects
+  
+  resources :employments
+  get '/resume' => 'employments#index', as: :resume
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
