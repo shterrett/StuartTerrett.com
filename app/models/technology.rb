@@ -5,5 +5,7 @@ class Technology < ActiveRecord::Base
   
   has_many :project_techs
   has_many :projects, through: :project_techs
+  has_many :employment_techs
+  has_many :employments, through: :employment_techs
   
 end

@@ -6,6 +6,7 @@ class Project < ActiveRecord::Base
   
   has_many :project_techs
   has_many :technologies, through: :project_techs
+  belongs_to :employment
   
   def source_link
     if self.source.blank? || self.source.downcase == "closed" 

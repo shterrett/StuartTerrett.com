@@ -32,6 +32,14 @@ describe Technology do
       tech.projects.first.should == project
     end
     
+    it "should have_many employments" do
+      employment = FactoryGirl.create(:employment)
+      tech.employments << employment
+      tech.save
+      tech.reload
+      tech.employments.first.should == employment
+    end
+    
   end
     
 end

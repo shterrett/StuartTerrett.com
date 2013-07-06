@@ -31,4 +31,24 @@ describe Employment do
     
   end
   
+  describe "Relationships" do
+    
+    let(:employment) { FactoryGirl.create(:employment) }
+    
+    it "should have_many technologies" do
+      technology = FactoryGirl.create(:technology)
+      employment.technologies << technology
+      employment.reload
+      employment.technologies.first.should == technology
+    end
+    
+    it "should have_many projects" do
+      project = FactoryGirl.create(:project)
+      employment.projects << project
+      employment.reload
+      employment.projects.first.should == project
+    end
+    
+  end
+  
 end

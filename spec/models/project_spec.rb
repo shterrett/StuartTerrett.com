@@ -37,6 +37,13 @@ describe Project do
       project.technologies.first.should == technology
     end
     
+    it "should belong_to employment" do
+      employment = FactoryGirl.create(:employment)
+      employment.projects << project
+      project.reload 
+      project.employment.should == employment
+    end
+    
   end
   
   describe "source code links" do

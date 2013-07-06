@@ -4,11 +4,11 @@ module ApplicationHelper
     html = flash.map do |key, msg|
       content_tag :div, msg, :id => key, :class => 'flash'
     end.join
-    raw(html)
+    html.html_safe
   end
   
   def render_markdown(text)
-    raw(Md.parser.render(text)) unless text.blank?
+    Md.parser.render(text).html_safe unless text.blank?
   end
   
 end

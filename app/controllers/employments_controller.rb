@@ -32,6 +32,8 @@ class EmploymentsController < ApplicationController
   
   def show
     @employment = Employment.find(params[:id])
+    @projects = @employment.projects
+    @technologies = @employment.technologies
   end
   
   def index

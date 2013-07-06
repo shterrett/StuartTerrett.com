@@ -4,4 +4,7 @@ class Employment < ActiveRecord::Base
   
   default_scope ->{ order('start_date desc') }
   
+  has_many :technologies, through: :employment_techs
+  has_many :employment_techs
+  has_many :projects
 end
