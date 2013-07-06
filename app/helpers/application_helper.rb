@@ -7,4 +7,8 @@ module ApplicationHelper
     raw(html)
   end
   
+  def render_markdown(text)
+    raw(Md.parser.render(text)) unless text.blank?
+  end
+  
 end
