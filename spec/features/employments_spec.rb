@@ -10,6 +10,8 @@ feature "Create Employment" do
     page.should have_field "employment_start_date"
     page.should have_field "employment_end_date"
     page.should have_field "employment_url"
+    page.should have_select "employment_technologies"
+    page.should have_select "employment_projects"
     page.should have_button "Create Employment"
   end
   
@@ -26,6 +28,36 @@ feature "Create Employment" do
     end.to change(Employment, :count).by(1)
   end
   
+  scenario "Create Employment and associate with technologies" do
+    tech = FactoryGirl.create(:technology)
+    visit "/employments/new"
+    fill_in "Company", with: "Millennium Partners Sports Club Management"
+    fill_in "Position", with: "Web Application Developer"
+    fill_in "employment_description", with: "Lorem Ipsum"
+    fill_in "employment_start_date", with: "2011-07-05"
+    fill_in "employment_end_date", with: "2014-07-05"
+    fill_in "employment_url", with: "http://sportsclubla.com"
+    select tech.name, from: "employment_technologies"
+    expect do
+      click_button "Create Employment" 
+    end.to change(EmploymentTech, :count).by(1)
+  end
+  
+  scenario "Create Employment and associate with projects" do
+    project = FactoryGirl.create(:project)
+    visit "/employments/new"
+    fill_in "Company", with: "Millennium Partners Sports Club Management"
+    fill_in "Position", with: "Web Application Developer"
+    fill_in "employment_description", with: "Lorem Ipsum"
+    fill_in "employment_start_date", with: "2011-07-05"
+    fill_in "employment_end_date", with: "2014-07-05"
+    fill_in "employment_url", with: "http://sportsclubla.com"
+    select project.name, from: "employment_projects"
+    click_button "Create Employment"
+    project.reload
+    project.employment.should_not be_nil
+  end
+  
 end
 
 feature "Edit Employment" do
@@ -33,14 +65,15 @@ feature "Edit Employment" do
   before(:all) { FactoryGirl.create(:employment) }
   
   scenario "Edit Employments Form" do
-    visit "/employments/new"
+    employment = Employment.all.last
+    visit "/employments/#{employment.id}/edit"
     page.should have_field "Company"
     page.should have_field "Position"
     page.should have_field "employment_description"
     page.should have_field "employment_start_date"
     page.should have_field "employment_end_date"
     page.should have_field "employment_url"
-    page.should have_button "Create Employment"
+    page.should have_button "Update Employment"
   end
   
   scenario "Update Employment" do
@@ -50,6 +83,12 @@ feature "Edit Employment" do
     click_button "Update Employment"
     employment_2 = Employment.find(employment.id)
     employment_2.description.should == "Lorem Ipsum Edited"
+  end
+  
+  scenario "Update Employment Technologies" do
+  end
+  
+  scenario "Update Employment Projects" do 
   end
   
 end
