@@ -30,6 +30,8 @@ class EmploymentsController < ApplicationController
   def update
     @employment = Employment.find(params[:id])
     if @employment.update_attributes(employment_params)
+      update_employment_techs(@employment, params[:employment][:technologies])
+      update_projects(@employment, params[:employment][:projects])
       flash[:success] = "Employment updated successfully"
       redirect_to resume_path
     else
@@ -58,9 +60,26 @@ class EmploymentsController < ApplicationController
     end
   end
   
+  def update_employment_techs(employment, technologies)
+    existing_ids = EmploymentTech.where(employment_id: employment.id).pluck(:technology_id)
+    to_delete = existing_ids - technologies
+    to_create = technologies - existing_ids
+    create_employment_techs(employment, to_create)
+    EmploymentTech.where(employment_id: employment.id, technology_id: to_delete).destroy_all
+  end
+  
   def associate_projects(employment, project_ids)
     projects = Project.where(id: project_ids)
     employment.projects << projects
+  end
+  
+  def update_projects(employment, project_ids)
+    existing_ids = employment.projects.pluck(:id)
+    to_delete = existing_ids - project_ids
+    to_create = project_ids - existing_ids
+    associate_projects(employment, to_create)
+    projects_to_delete = Project.where(id: to_delete)
+    employment.projects.delete(projects_to_delete)
   end
   
 end

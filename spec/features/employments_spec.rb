@@ -86,9 +86,31 @@ feature "Edit Employment" do
   end
   
   scenario "Update Employment Technologies" do
+    employment = Employment.last
+    tech = FactoryGirl.create(:technology)
+    tech_2 = FactoryGirl.create(:technology)
+    employment.technologies << tech
+    visit "/employments/#{employment.id}/edit"
+    unselect tech.name, from: "employment_technologies"
+    select tech_2.name, from: "employment_technologies"
+    click_button "Update Employment"
+    employment.reload
+    employment.technologies.should include(tech_2)
+    employment.technologies.should_not include(tech)
   end
   
   scenario "Update Employment Projects" do 
+    employment = Employment.last
+    proj = FactoryGirl.create(:project)
+    proj_2 = FactoryGirl.create(:project)
+    employment.projects << proj
+    visit "/employments/#{employment.id}/edit"
+    unselect proj.name, from: "employment_projects"
+    select proj_2.name, from: "employment_projects"
+    click_button "Update Employment"
+    employment.reload
+    employment.projects.should include(proj_2)
+    employment.projects.should_not include(proj)
   end
   
 end
