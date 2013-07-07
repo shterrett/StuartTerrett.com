@@ -1,0 +1,39 @@
+= content_for(:title) { "Contact Me" }
+
+%section
+  %header
+    %h1 Contact Me
+  
+  %section
+    = form_for @contact do |f|
+      %div.row
+        %div.large-3.columns
+          %label
+            %strong Name: 
+        %div.large-6.columns
+          = f.text_field :name, { placeholder: "Name" }
+        %div.large-3.columns
+      %div.row
+        %div.large-3.columns
+          %label
+            %strong Email: 
+        %div.large-6.columns
+          = f.email_field :email, { placeholder: "yourname@example.com" }
+        %div.large-3.columns  
+      %div.row
+        %div.large-3.columns
+          %label
+            %strong Subject: 
+        %div.large-6.columns
+          = f.text_field :subject, { placeholder: "Subject" }
+        %div.large-3.columns      
+      %div.row
+        %div.large-3.columns
+          %label
+            %strong Body: 
+        %div.large-6.columns
+          = f.text_area :body, { placeholder: "Body" }
+        %div.large-3.columns        
+      %div.row
+        %div.large-6.large-centered.small-6.small-centered.columns
+          = f.submit

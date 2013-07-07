@@ -6,6 +6,9 @@ StuartTerrett::Application.routes.draw do
   
   resources :employments
   get '/resume' => 'employments#index', as: :resume
+  
+  resources :contacts, only: [:new, :create]
+  get '/contact-me' => 'contacts#new', as: :contact_me
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
