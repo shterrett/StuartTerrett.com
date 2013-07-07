@@ -1,15 +1,15 @@
 %div.row
   %div.large-8.small-12.columns
-    = employment.company
+    = link_to employment.position, employment_path(employment)
   %div.large-2.small-4.columns
     = employment.start_date
   %div.large-2.small-8.columns
     = employment.end_date
 %div.row
   %div.large-6.small-12.columns
-    = employment.position
+    = employment.company
   %div.large-6.small-12.columns
-    = employment.url
+    = link_to employment.url
 %div.row
   %div.large-12.small-12.columns
     = render_markdown(employment.description)

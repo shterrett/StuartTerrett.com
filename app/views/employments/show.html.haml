@@ -12,7 +12,7 @@
       %div.large-8.small-12.columns
         %div.row
           %div.large-8.small-6.columns
-            = @employment.url
+            = link_to @employment.url
           %div.large-2.small-4.columns
             = @employment.start_date
           %div.large-2.small-8.columns
@@ -22,6 +22,8 @@
             %article
               = render_markdown @employment.description
           %div.large-12.columns
+            %header
+              %h1 Related Projects
             = render "projects/project_list", all_projects: @projects
       %div.large-4.small-12.columns
         = render "technologies/technology_list", technologies: @technologies, title: "Related Technologies"
