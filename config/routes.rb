@@ -9,6 +9,10 @@ StuartTerrett::Application.routes.draw do
   
   resources :contacts, only: [:new, :create]
   get '/contact-me' => 'contacts#new', as: :contact_me
+  
+  resources :abouts, only: [:show, :update]
+  get '/about-me' => 'abouts#show', as: :about_me
+  get '/about/edit' => 'abouts#edit', as: :about_edit
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

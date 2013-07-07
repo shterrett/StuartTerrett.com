@@ -1,0 +1,9 @@
+= content_for(:title) { "About Me" }
+
+%section
+  %header
+    %h1 About Me
+    
+  %section
+    %article
+      = render_markdown @about.info
