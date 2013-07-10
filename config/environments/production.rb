@@ -89,3 +89,15 @@ StuartTerrett::Application.configure do
     authentication:       'plain',
     enable_starttls_auto: true  }
 end
+
+module Credentials
+  
+  class << self
+    
+    def method_missing(method, args, &block)
+      ENV[method.to_s]
+    end
+    
+  end
+  
+end 
