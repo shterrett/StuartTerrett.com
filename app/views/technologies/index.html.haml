@@ -10,3 +10,4 @@
         - techs.each do |tech|
           %div.large-2.small-4.columns
             = link_to tech.name, technology_path(tech)
+        = fill_row(techs, 6, "large-2.small-4.columns")

@@ -51,7 +51,7 @@ class ProjectsController < ApplicationController
   
   def create_project_techs(project, technologies)
     technologies.each do |id|
-      ProjectTech.create({ project_id: project.id, technology_id: id }), unless id.empty?
+      ProjectTech.create({ project_id: project.id, technology_id: id }) unless id.empty?
     end
   end
   
