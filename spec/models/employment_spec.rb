@@ -51,4 +51,18 @@ describe Employment do
     
   end
   
+  describe "formatting" do
+    
+    it "should format date for the resume as 'Month Year'" do
+      employment = FactoryGirl.build(:employment)
+      employment.start_date = DateTime.parse("2000-01-01")
+      employment.end_date = DateTime.parse("2001-12-31")
+      start_date = employment.format_date(:start_date)
+      start_date.should == "Jan 2000"
+      end_date = employment.format_date(:end_date)
+      end_date.should == "Dec 2001"
+    end
+    
+  end
+  
 end

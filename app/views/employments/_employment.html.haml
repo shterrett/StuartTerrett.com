@@ -1,17 +1,18 @@
-%div.row
-  %div.large-8.small-12.columns
-    = link_to employment.position, employment_path(employment)
-  %div.large-2.small-4.columns
-    = employment.start_date
-  %div.large-2.small-8.columns
-    = employment.end_date
-%div.row
-  %div.large-6.small-12.columns
-    = employment.company
-  %div.large-6.small-12.columns
-    = link_to employment.url
-%div.row
-  %div.large-12.small-12.columns
-    %article.md
-      = render_markdown(employment.description)
+%section.employment
+  %div.row.first
+    %div.large-8.small-12.columns.position
+      = link_to employment.position, employment_path(employment)
+    %div.large-2.small-4.columns.date
+      = employment.format_date(:start_date)
+    %div.large-2.small-8.columns.date
+      = employment.format_date(:end_date)
+  %div.row.second
+    %div.large-6.small-12.columns.company
+      = employment.company
+    %div.large-6.small-12.columns.url
+      = link_to employment.url
+  %div.row.third
+    %div.large-12.small-12.columns.description
+      %article.md
+        = render_markdown(employment.description)
   

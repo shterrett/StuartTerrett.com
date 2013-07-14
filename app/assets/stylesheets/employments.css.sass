@@ -1,3 +1,29 @@
 // Place all the styles related to the employments controller here.
 // They will automatically be included in application.css.
 // You can use Sass here: http://sass-lang.com/
+
+.employments
+  &.resume
+    .employment
+      margin: 0 3em
+      .first, .second
+        line-height: 1em
+        .columns
+          margin: 0
+          padding: 0.5%
+      .company
+        font-weight: bold
+      .position
+        text-transform: uppercase
+        font-size: 1.25em
+        font-weight: bold
+      .date
+        text-align: right
+      .url
+        text-align: right
+      @media screen and (max-width: 768px)
+        .date
+          text-align: left
+        .url
+          text-align: left
+        
