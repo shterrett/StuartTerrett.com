@@ -8,7 +8,7 @@
     = form_for @about do |f|
       %div.row
         %div.large-8.large-centered.small-10.small-centered.columns
-          = f.text_area :info
+          = f.text_area :info, { class: "long" }
       %div.row
         %div.large-6.large-centered.small-6.small-centered.columns
           = f.submit

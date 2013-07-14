@@ -18,7 +18,7 @@
       %label
         %strong Description:
     %div.large-6.columns
-      =f.text_area :description, { placeholder: "Describe job" }
+      =f.text_area :description, { placeholder: "Describe job", class: "long" }
     %div.large-3.columns
   %div.row
     %div.large-3.columns
@@ -47,12 +47,14 @@
         %strong Technologies:
     %div.large-6.columns
       = f.collection_select :technologies, @technologies, 'id', 'name', { selected: @employment_technology_ids }, { multiple: "multiple" }
+    %div.large-3.columns
   %div.row
     %div.large-3.columns
       %label
         %strong Projects:
     %div.large-6.columns
       = f.collection_select :projects, @projects, 'id', 'name', { selected: @employment_project_ids }, { multiple: "multiple" }
+    %div.large-3.columns
   %div.row
     %div.large-6.large-centered.small-6.small-centered.columns
       = f.submit

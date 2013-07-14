@@ -4,6 +4,11 @@ section
     text-align: right
     border-bottom: 2px solid black
     margin: 0 6em 2em 6em
+    h1
+      margin-bottom: 0
+    h2
+      font-size: 1.5em
+      margin-top: 0
   section
     header
       font-size: 0.65em
@@ -29,3 +34,8 @@ form
     padding-top: 0.75em
   strong
     cursor: default
+  textarea
+    &.short
+      min-height: 4em
+    &.long
+      min-height: 12em
