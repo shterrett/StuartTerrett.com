@@ -14,9 +14,9 @@
           %div.large-8.small-6.columns
             = link_to @employment.url
           %div.large-2.small-4.columns
-            = @employment.start_date
+            = @employment.format_date(:start_date)
           %div.large-2.small-8.columns
-            = @employment.end_date
+            = @employment.format_date(:end_date)
         %div.row
           %div.large-12.columns
             %article.md

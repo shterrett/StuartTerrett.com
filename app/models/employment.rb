@@ -10,7 +10,11 @@ class Employment < ActiveRecord::Base
   
   def format_date(date_name)
     date = self.send(date_name)
-    date.strftime('%b %Y')
+    if date > DateTime.parse("1000-01-01")
+      date.strftime('%b %Y')
+    else
+      "Current"
+    end
   end
   
 end

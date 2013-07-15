@@ -32,6 +32,8 @@ form
   label
     text-align: right
     padding-top: 0.75em
+    @media screen and (max-width: 768px)
+      text-align: center
   strong
     cursor: default
   textarea
@@ -39,3 +41,9 @@ form
       min-height: 4em
     &.long
       min-height: 12em
+  aside.instruction
+    font-style: italic
+    font-size: 0.65em
+    font-weight: 200
+  input, textarea
+    margin: 0 !important
