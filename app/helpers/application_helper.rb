@@ -2,7 +2,15 @@ module ApplicationHelper
   
   def render_flash
     html = flash.map do |key, msg|
-      content_tag :div, msg, :id => key, :class => 'flash'
+      style = case key
+      when :error
+        "alert-box alert radius"
+      when :success
+        "alert-box success radius"
+      else
+        "alert-box secondary radius"
+      end
+      content_tag :div, msg, :id => key, :class => style
     end.join
     html.html_safe
   end
