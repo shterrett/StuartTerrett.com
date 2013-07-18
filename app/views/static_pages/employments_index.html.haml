@@ -1,0 +1,9 @@
+= content_for(:title) { "Edit Employments" }
+
+%section.admin.edit
+  %header
+    %h1 
+      Choose Employment to Edit
+      
+  %section
+    = render "edit_list", models: @employments, type: :employments

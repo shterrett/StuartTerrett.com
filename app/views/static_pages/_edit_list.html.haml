@@ -1,0 +1,4 @@
+%ul
+  - models.each do |model|
+    %li 
+      = "#{model.name} | #{ link_to "Edit", "/#{type}/#{model.id}/edit" }".html_safe

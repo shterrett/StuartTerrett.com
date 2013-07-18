@@ -13,6 +13,13 @@ StuartTerrett::Application.routes.draw do
   resources :abouts, only: [:show, :update]
   get '/about-me' => 'abouts#show', as: :about_me
   get '/about/edit' => 'abouts#edit', as: :about_edit
+  
+  get '/admin' => 'static_pages#admin', as: :admin
+  get '/admin/technologies' => 'static_pages#technologies_index', as: :admin_technologies
+  get '/admin/projects' => 'static_pages#projects_index', as: :admin_projects
+  get '/admin/employments' => 'static_pages#employments_index', as: :admin_employments
+  
+  root 'abouts#show'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

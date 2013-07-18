@@ -69,6 +69,9 @@ describe Employment do
       employment.format_date(:end_date).should == "Current"
     end
     
+    it "should give 'name' as 'position | company'" do
+      employment.name.should == "#{employment.position} | #{employment.company}"
+    end
   end
   
 end

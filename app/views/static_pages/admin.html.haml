@@ -1,0 +1,26 @@
+= content_for(:title) { "Administration" }
+
+%section.admin
+  %header
+    %h1
+      Pick an Action
+  %section
+    %div.row
+      %div.large-4.small-6.columns
+        = link_to "Add Technology", new_technology_path
+      %div.large-4.small-6.columns
+        = link_to "Add Project", new_project_path
+      %div.large-4.small-12.columns
+        = link_to "Add Employment", new_employment_path
+    %div.row
+      %div.large-4.small-6.columns
+        = link_to "Edit About-Me", about_edit_path
+      %div.large-4.small-6.columns
+        = link_to "Chosse Technology To Edit", admin_technologies_path
+      %div.large-4.small-6.columns
+        = link_to "Choose Projet To Edit", admin_projects_path
+    %div.row 
+      %div.large-4.small-6.columns
+        = link_to "Choose Employment To Edit", admin_employments_path
+        
+      

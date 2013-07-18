@@ -17,4 +17,8 @@ class Employment < ActiveRecord::Base
     end
   end
   
+  def name
+    "#{self.position} | #{self.company}"
+  end
+  
 end
