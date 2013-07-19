@@ -1,4 +1,4 @@
-class StaticPagesController < ApplicationController
+class AdminController < ApplicationController
   
   def admin
   end

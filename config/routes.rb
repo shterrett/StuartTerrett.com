@@ -14,10 +14,10 @@ StuartTerrett::Application.routes.draw do
   get '/about-me' => 'abouts#show', as: :about_me
   get '/about/edit' => 'abouts#edit', as: :about_edit
   
-  get '/admin' => 'static_pages#admin', as: :admin
-  get '/admin/technologies' => 'static_pages#technologies_index', as: :admin_technologies
-  get '/admin/projects' => 'static_pages#projects_index', as: :admin_projects
-  get '/admin/employments' => 'static_pages#employments_index', as: :admin_employments
+  get '/admin' => 'admin#admin', as: :admin
+  get '/admin/technologies' => 'admin#technologies_index', as: :admin_technologies
+  get '/admin/projects' => 'admin#projects_index', as: :admin_projects
+  get '/admin/employments' => 'admin#employments_index', as: :admin_employments
   
   root 'abouts#show'
   # The priority is based upon order of creation: first created -> highest priority.
