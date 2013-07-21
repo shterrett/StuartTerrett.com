@@ -1,5 +1,7 @@
 class TechnologiesController < ApplicationController
   
+  http_basic_authenticate_with name: Auth.username, password: Auth.password, except: [:show, :index]
+
   def new
     @technology = Technology.new
   end

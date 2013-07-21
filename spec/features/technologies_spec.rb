@@ -1,6 +1,33 @@
 require 'spec_helper'
 
+feature "Authentication" do
+
+  scenario "New Technology should be authenticated" do
+    visit "/technologies/new"
+    page.status_code.should == 401
+  end
+
+  scenario "Edit Technology should be authenticated" do
+    visit "/technologies/#{Technology.all.first.id}/edit"
+    page.status_code.should == 401
+  end
+
+  scenario "Show Technology should not be authenticated" do
+    visit "/technologies/#{Technology.all.first.id}"
+    page.status_code.should == 200
+  end
+
+  scenario "Index Technologies should not be authenticated" do
+    visit "/technologies"
+    page.status_code.should == 200
+  end
+
+end
+
 feature "New Technology" do
+  
+  include AuthHelper
+  before(:each) { http_login }
   
   scenario "visit /technologies/new" do
     visit '/technologies/new'
@@ -24,7 +51,10 @@ end
 
 feature "Edit Technology" do
   before(:all) { FactoryGirl.create(:technology) }
-  
+ 
+  include AuthHelper
+  before(:each) { http_login }
+
   scenario "visit /technologies/:id/edit" do
     tech = Technology.all.first
     id = tech.id
