@@ -1,5 +1,7 @@
 class ProjectsController < ApplicationController
-  
+
+  http_basic_authenticate_with name: Auth.username, password: Auth.password, except: [:show, :index]
+
   def new
     @project = Project.new
     @technologies = Technology.all

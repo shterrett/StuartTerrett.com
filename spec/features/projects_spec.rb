@@ -1,7 +1,36 @@
 require 'spec_helper'
 
+feature "Authentication" do
+
+  before(:all) { FactoryGirl.create(:project) }
+
+  scenario "Projects New should be authenticated" do
+    visit "/projects/new"
+    page.status_code.should == 401
+  end
+
+  scenario "Projects Edit should be authenticated" do
+    visit "/projects/#{Project.all.first.id}/edit"
+    page.status_code.should == 401
+  end
+
+  scenario "Projects Show should not be authenticated" do
+    visit "/projects/#{Project.all.first.id}"
+    page.status_code.should == 200
+  end
+
+  scenario "Projects Index should not be authenticated" do
+    visit "/projects"
+    page.status_code.should == 200
+  end
+
+
+end
+
 feature "New Projects" do
-  
+  include AuthHelper
+  before(:each) { http_login }
+
   scenario "Visit /projects/new" do
     visit '/projects/new'
     page.should have_field "Name"
@@ -30,7 +59,9 @@ feature "New Projects" do
 end
 
 feature "Edit Projects" do
-  
+  include AuthHelper
+  before(:each) { http_login }
+
   before(:all) { FactoryGirl.create(:project) }
   
   scenario "Visit /projects/:id/edit" do
