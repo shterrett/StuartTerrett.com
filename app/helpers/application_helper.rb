@@ -1,5 +1,9 @@
 module ApplicationHelper
-  
+
+  def authenticate
+    http_basic_authenticate_with name: Auth.username, password: Auth.password
+  end
+
   def render_flash
     html = flash.map do |key, msg|
       style = case key

@@ -1,7 +1,24 @@
 require 'spec_helper'
 
-feature "Edit About" do
+feature "Authentication" do
+
+  scenario "Edits should be authenticated" do
+    visit "/about/edit"
+    page.status_code.should == 401
+  end
   
+  scenario "Show should not be authenticated" do
+    visit "/about-me"
+    page.status_code.should == 200
+  end
+
+end
+
+feature "Edit About" do
+ include AuthHelper
+
+  before(:each) { http_login }
+
   scenario "visit /about/edit" do
     visit "/about/edit"
     page.should have_field "about_info"
