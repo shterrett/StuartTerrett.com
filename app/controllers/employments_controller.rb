@@ -1,5 +1,7 @@
 class EmploymentsController < ApplicationController
   
+  http_basic_authenticate_with name: Auth.username, password: Auth.password, except: [ :show, :index ]
+
   def new
     @employment = Employment.new
     @technologies = Technology.all

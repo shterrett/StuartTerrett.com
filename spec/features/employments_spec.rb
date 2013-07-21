@@ -1,7 +1,37 @@
 require 'spec_helper'
 
-feature "Create Employment" do
+feature "Authentication" do
   
+  before(:all) { FactoryGirl.create(:employment) }
+
+  scenario "New Employment should be authenticated" do
+    visit "/employments/new"
+    page.status_code.should == 401
+  end
+
+  scenario "Edit Employments should be authenticated" do
+    visit "/employments/#{Employment.all.first.id}/edit"
+    page.status_code.should == 401
+  end 
+  
+  scenario "Show Employment should not be authenticated" do
+    visit "/employments/#{Employment.all.first.id}"
+    page.status_code.should == 200
+  end  
+
+  scenario "Index Employments should not be authenticated" do
+    visit "/resume"
+    page.status_code.should == 200
+  end 
+
+end
+
+feature "Create Employment" do
+
+  include AuthHelper  
+
+  before(:each) { http_login }
+
   scenario "New Employments Form" do
     visit "/employments/new"
     page.should have_field "Company"
@@ -61,7 +91,8 @@ feature "Create Employment" do
 end
 
 feature "Edit Employment" do
-  
+  include AuthHelper
+  before(:each) { http_login }
   before(:all) { FactoryGirl.create(:employment) }
   
   scenario "Edit Employments Form" do
@@ -128,7 +159,7 @@ feature "Resume" do
     employment = Employment.all
     employment.each do |empl|
       page.should have_text empl.company
-      page.should have_text empl.start_date
+      page.should have_text empl.format_date(:start_date)
       page.html.should include render_markdown(empl.description)
     end
   end
