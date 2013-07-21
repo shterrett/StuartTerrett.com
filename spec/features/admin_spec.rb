@@ -1,6 +1,33 @@
 require 'spec_helper'
 
+feature "Authentication" do
+
+  scenario "Admin Index should be authenticated" do
+    visit "/admin"
+    page.status_code.should == 401
+  end
+
+  scenario "Admin Technologies Index should be authenticated" do
+    visit "/admin/technologies"
+    page.status_code.should == 401
+  end
+
+  scenario "Admin Projects Index should be authenticated" do
+    visit "/admin/technologies"
+    page.status_code.should == 401
+  end
+
+  scenario "Admin Employments Index should be authenticated" do
+    visit "/admin/employments"
+    page.status_code.should == 401
+  end
+
+end
+
 feature "List Admin tasks" do
+  include AuthHelper
+
+  before(:each) { http_login }
 
   scenario "Visit admin landing page" do
     visit "/admin"
@@ -17,7 +44,7 @@ feature "List Admin tasks" do
     visit "/admin/technologies"
     techs = Technology.all
     techs.each do |tech|
-      page.should have_link tech.name, href: edit_tech_path(tech)
+      page.should have_link tech.name, href: edit_technology_path(tech)
     end
   end
 

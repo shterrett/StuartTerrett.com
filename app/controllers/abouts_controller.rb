@@ -1,5 +1,4 @@
 class AboutsController < ApplicationController
-  # before_action :authenticate, except: :show
 
   http_basic_authenticate_with name: Auth.username, password: Auth.password, except: :show
 
