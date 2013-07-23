@@ -69,9 +69,11 @@ feature "Edit Technology" do
     visit "/technologies/#{tech.id}/edit"
     fill_in "Name", with: "EditedName"
     fill_in "Abbreviation", with: "edits"
+    fill_in "technology_description", with: "Test Description"
     click_button "Update Technology"
     new_tech = Technology.find(tech.id)
     new_tech.name.should == "EditedName"
+    new_tech.description.should == "Test Description"
     new_tech.abbreviation.should == "edits"
     page.should have_text "Technology updated successfully"
   end

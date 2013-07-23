@@ -42,7 +42,7 @@ class TechnologiesController < ApplicationController
   end
   
   def tech_params
-    params.require(:technology).permit(:name, :abbreviation)
+    params.require(:technology).permit(:name, :abbreviation, :description)
   end
   
 end
