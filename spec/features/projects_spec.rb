@@ -86,9 +86,11 @@ feature "Edit Projects" do
     project = Project.all.first
     visit "/projects/#{project.id}/edit"
     fill_in "Name", with: "EditedName"
+    fill_in "project_source", with: "https://github.com"
     click_button "Update Project"
     edited_project = Project.find(project.id)
     edited_project.name.should == "EditedName"
+    edited_project.source.should == "https://github.com"
     page.should have_text "Project updated successfully"
   end
   
