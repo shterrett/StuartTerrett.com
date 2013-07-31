@@ -3,7 +3,7 @@ module Auth
 
     def username
       if Rails.env.production?
-        # Heroku ENV
+        "admin" 
       else
         Credentials.username
       end
@@ -11,9 +11,17 @@ module Auth
 
     def password
       if Rails.env.production?
-        # Heroku ENV
+        ENV["admin_password"] 
       else
         Credentials.password
+      end
+    end
+    
+    def email_username
+      if Rails.env.production?
+        "website"
+      else
+        ENV["email_password"]
       end
     end
 

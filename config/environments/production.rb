@@ -84,8 +84,8 @@ StuartTerrett::Application.configure do
     address:              'smtp.gmail.com',
     port:                 587,
     domain:               'stuartterrett.com',
-    user_name:            Credentials.email_username,
-    password:             Credentials.email_password,
+    user_name:            Auth.email_username,
+    password:             Auth.email_password,
     authentication:       'plain',
     enable_starttls_auto: true  }
 end
