@@ -21,7 +21,15 @@ module Auth
       if Rails.env.production?
         "website"
       else
+        Credentials.email_username 
+      end
+    end
+
+    def email_password
+      if Rails.env.production?
         ENV["email_password"]
+      else
+        Credentials.email_password
       end
     end
 
