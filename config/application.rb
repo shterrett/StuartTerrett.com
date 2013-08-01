@@ -30,7 +30,8 @@ end
 module AssetsInitializers
   class Railtie < Rails::Railtie
     initializer "assets_initializers.initialize_rails", :group => :assets do |app|
-      require "#{Rails.root}/config/initializers/load_config.rb"
+      require "#{Rails.root}/config/initializers/auth.rb"
+      require "#{Rails.root}/config/initializers/credentials.rb"
     end
   end
 end
