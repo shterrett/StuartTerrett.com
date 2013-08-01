@@ -26,11 +26,3 @@ module StuartTerrett
     # config.i18n.default_locale = :de
   end
 end
-
-module AssetsInitializers
-  class Railtie < Rails::Railtie
-    initializer "assets_initializers.initialize_rails", :group => :assets do |app|
-      require "#{Rails.root}/config/initializers/auth.rb"
-    end
-  end
-end
