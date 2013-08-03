@@ -3,7 +3,7 @@ class AboutsController < ApplicationController
   http_basic_authenticate_with name: Auth.username, password: Auth.password, except: :show
 
   def edit
-    @about = About.find(1)
+    @about = About.find_or_create_by(id: 1)
   end
   
   def update
@@ -18,7 +18,7 @@ class AboutsController < ApplicationController
   end
   
   def show
-    @about = About.find(1)
+    @about = About.where(id: 1)
   end
   
   def about_params
