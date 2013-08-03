@@ -14,6 +14,27 @@ feature "Authentication" do
 
 end
 
+feature "Create About" do
+  include AuthHelper
+
+  before(:each) { About.all.destroy_all }
+
+  scenario "visit / before About has been created" do
+    expect do
+      visit root_path
+    end.to change(About, :count).by(1)
+    page.status_code.should == 200
+  end
+  
+  scenario "visit /about/edit before About has been created" do
+    http_login 
+    expect do
+      visit "/about/edit"
+    end.to change(About, :count).by(1)
+    page.status_code.should == 200
+  end
+
+end
 feature "Edit About" do
  include AuthHelper
 
