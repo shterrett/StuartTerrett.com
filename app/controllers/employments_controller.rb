@@ -9,7 +9,7 @@ class EmploymentsController < ApplicationController
   end
   
   def create
-    @employment = Employment.new(employment_params)
+    @employment = Employment.new(employment_params.except(:technologies, :projects))
     if @employment.save
       create_employment_techs(@employment, params[:employment][:technologies])
       associate_projects(@employment, params[:employment][:projects])
@@ -31,7 +31,7 @@ class EmploymentsController < ApplicationController
   
   def update
     @employment = Employment.find(params[:id])
-    if @employment.update_attributes(employment_params)
+    if @employment.update_attributes(employment_params.except(:technologies, :projects))
       update_employment_techs(@employment, params[:employment][:technologies])
       update_projects(@employment, params[:employment][:projects])
       flash[:success] = "Employment updated successfully"
@@ -53,19 +53,20 @@ class EmploymentsController < ApplicationController
   end
   
   def employment_params
-    params.require(:employment).permit(:company, :position, :description, :start_date, :end_date, :url, :technologies, :projects)
+    params.require(:employment).permit(:company, :position, :description, :start_date, :end_date, :url, technologies: [], projects: [])
   end
   
   def create_employment_techs(employment, technologies)
     technologies.each do |id|
-      EmploymentTech.create({ employment_id: employment.id, technology_id: id }) unless id.empty?
+      EmploymentTech.create({ employment_id: employment.id, technology_id: id }) unless id.blank?
     end
   end
   
   def update_employment_techs(employment, technologies)
+    submitted_technologies = technologies.map { |id| id.to_i unless id.blank? }
     existing_ids = EmploymentTech.where(employment_id: employment.id).pluck(:technology_id)
-    to_delete = existing_ids - technologies
-    to_create = technologies - existing_ids
+    to_delete = existing_ids - submitted_technologies
+    to_create = submitted_technologies - existing_ids
     create_employment_techs(employment, to_create)
     EmploymentTech.where(employment_id: employment.id, technology_id: to_delete).destroy_all
   end
@@ -76,9 +77,10 @@ class EmploymentsController < ApplicationController
   end
   
   def update_projects(employment, project_ids)
+    submitted_project_ids = project_ids.map { |id| id.to_i unless id.blank? }
     existing_ids = employment.projects.pluck(:id)
-    to_delete = existing_ids - project_ids
-    to_create = project_ids - existing_ids
+    to_delete = existing_ids - submitted_project_ids
+    to_create = submitted_project_ids - existing_ids
     associate_projects(employment, to_create)
     projects_to_delete = Project.where(id: to_delete)
     employment.projects.delete(projects_to_delete)

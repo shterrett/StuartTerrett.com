@@ -115,6 +115,20 @@ feature "Edit Employment" do
     employment_2 = Employment.find(employment.id)
     employment_2.description.should == "Lorem Ipsum Edited"
   end
+
+  scenario "Update Employment without changing projects or technologies" do
+    employment = Employment.all.last
+    tech = Technology.all.last
+    project = Project.all.last
+    employment.projects << project
+    employment.technologies << tech
+    visit "/employments/#{employment.id}/edit"
+    fill_in "employment_description", with: "Lorem Ipsum Edited"
+    click_button "Update Employment"
+    employment_2 = Employment.find(employment.id)
+    employment_2.technologies.should include(tech)
+    employment_2.projects.should include(project)
+  end
   
   scenario "Update Employment Technologies" do
     employment = Employment.last
