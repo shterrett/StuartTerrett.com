@@ -108,6 +108,19 @@ feature "Edit Projects" do
     project.technologies.should include(tech_2)
     project.technologies.should_not include(tech)
   end
+
+  scenario "Edit project without changing technologies" do
+    project = Project.all.first
+    tech = FactoryGirl.create(:technology)
+    tech.name = "Test Technology"
+    tech.save
+    ProjectTech.create({ technology_id: tech.id, project_id: project.id })
+    visit "/projects/#{project.id}/edit"
+    fill_in "Name", with: "EditedName"
+    click_button "Update Project"
+    project.technologies.should include(tech)
+  end
+
   
 end
 
