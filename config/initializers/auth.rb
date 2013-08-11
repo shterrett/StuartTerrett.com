@@ -19,7 +19,7 @@ module Auth
     
     def email_username
       if Rails.env.production?
-        "website"
+        "website@stuartterrett.com"
       else
         Credentials.email_username 
       end
