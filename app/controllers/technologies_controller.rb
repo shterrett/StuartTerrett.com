@@ -42,7 +42,7 @@ class TechnologiesController < ApplicationController
   end
 
   def tokens
-    @technologies= Technology.where("name like ?", "%#{params[:q]}%")
+    @technologies= Technology.where("abbreviation like ?", "%#{params[:q]}%")
     respond_to do |format|
       format.json { render json: @technologies.map { |project| project.attributes.slice("id", "name") } }
     end
