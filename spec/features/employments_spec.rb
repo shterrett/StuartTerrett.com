@@ -1,8 +1,6 @@
 require 'spec_helper'
 
 feature "Authentication" do
-  
-  before(:all) { FactoryGirl.create(:employment) }
 
   scenario "New Employment should be authenticated" do
     visit "/employments/new"
@@ -10,25 +8,27 @@ feature "Authentication" do
   end
 
   scenario "Edit Employments should be authenticated" do
-    visit "/employments/#{Employment.all.first.id}/edit"
+    employment = FactoryGirl.create(:employment)
+    visit "/employments/#{employment.id}/edit"
     page.status_code.should == 401
-  end 
-  
+  end
+
   scenario "Show Employment should not be authenticated" do
-    visit "/employments/#{Employment.all.first.id}"
+    employment = FactoryGirl.create(:employment)
+    visit "/employments/#{employment.id}"
     page.status_code.should == 200
-  end  
+  end
 
   scenario "Index Employments should not be authenticated" do
     visit "/resume"
     page.status_code.should == 200
-  end 
+  end
 
 end
 
 feature "Create Employment" do
 
-  include AuthHelper  
+  include AuthHelper
 
   before(:each) { http_login }
 
@@ -40,12 +40,12 @@ feature "Create Employment" do
     page.should have_field "employment_start_date"
     page.should have_field "employment_end_date"
     page.should have_field "employment_url"
-    page.should have_select "employment_technologies"
-    page.should have_select "employment_projects"
+    page.should have_field "employment_technology_tokens"
+    page.should have_field "employment_project_tokens"
     page.should have_button "Create Employment"
   end
-  
-  scenario "Create New Employment" do
+
+  scenario "Create New Employment", js: true do
     visit "/employments/new"
     fill_in "Company", with: "Millennium Partners Sports Club Management"
     fill_in "Position", with: "Web Application Developer"
@@ -53,11 +53,10 @@ feature "Create Employment" do
     fill_in "employment_start_date", with: "2011-07-05"
     fill_in "employment_end_date", with: "2014-07-05"
     fill_in "employment_url", with: "http://sportsclubla.com"
-    expect do
-      click_button "Create Employment"
-    end.to change(Employment, :count).by(1)
+    click_button "Create Employment"
+    page.should have_text 'Employment created successfully'
   end
-  
+
   scenario "Create Employment and associate with technologies" do
     tech = FactoryGirl.create(:technology)
     visit "/employments/new"
@@ -67,12 +66,13 @@ feature "Create Employment" do
     fill_in "employment_start_date", with: "2011-07-05"
     fill_in "employment_end_date", with: "2014-07-05"
     fill_in "employment_url", with: "http://sportsclubla.com"
-    select tech.name, from: "employment_technologies"
-    expect do
-      click_button "Create Employment" 
-    end.to change(EmploymentTech, :count).by(1)
+    fill_in 'employment_technology_tokens', with: tech.id
+    fill_in 'employment_project_tokens', with: ''
+    click_button "Create Employment"
+    page.should have_text 'Employment created successfully'
+    expect(EmploymentTech.last.technology_id).to eq(tech.id)
   end
-  
+
   scenario "Create Employment and associate with projects" do
     project = FactoryGirl.create(:project)
     visit "/employments/new"
@@ -82,21 +82,20 @@ feature "Create Employment" do
     fill_in "employment_start_date", with: "2011-07-05"
     fill_in "employment_end_date", with: "2014-07-05"
     fill_in "employment_url", with: "http://sportsclubla.com"
-    select project.name, from: "employment_projects"
+    fill_in 'employment_project_tokens', with: project.id
+    fill_in 'employment_technology_tokens', with: ''
     click_button "Create Employment"
-    project.reload
-    project.employment.should_not be_nil
+    expect(Employment.last.projects).to eq [project]
   end
-  
+
 end
 
 feature "Edit Employment" do
   include AuthHelper
   before(:each) { http_login }
-  before(:all) { FactoryGirl.create(:employment) }
-  
+
   scenario "Edit Employments Form" do
-    employment = Employment.all.last
+    employment = FactoryGirl.create(:employment)
     visit "/employments/#{employment.id}/edit"
     page.should have_field "Company"
     page.should have_field "Position"
@@ -106,20 +105,19 @@ feature "Edit Employment" do
     page.should have_field "employment_url"
     page.should have_button "Update Employment"
   end
-  
-  scenario "Update Employment" do
-    employment = Employment.all.last
+
+  scenario "Update Employment", js: true do
+    employment =  FactoryGirl.create(:employment)
     visit "/employments/#{employment.id}/edit"
     fill_in "employment_description", with: "Lorem Ipsum Edited"
     click_button "Update Employment"
-    employment_2 = Employment.find(employment.id)
-    employment_2.description.should == "Lorem Ipsum Edited"
+    page.should have_text "Lorem Ipsum Edited"
   end
 
-  scenario "Update Employment without changing projects or technologies" do
-    employment = Employment.all.last
-    tech = Technology.all.last
-    project = Project.all.last
+  scenario "Update Employment without changing projects or technologies", js: true do
+    employment = FactoryGirl.create(:employment)
+    tech = FactoryGirl.create(:technology)
+    project = FactoryGirl.create(:project)
     employment.projects << project
     employment.technologies << tech
     visit "/employments/#{employment.id}/edit"
@@ -129,45 +127,45 @@ feature "Edit Employment" do
     employment_2.technologies.should include(tech)
     employment_2.projects.should include(project)
   end
-  
+
   scenario "Update Employment Technologies" do
-    employment = Employment.last
+    employment = FactoryGirl.create(:employment)
     tech = FactoryGirl.create(:technology)
     tech_2 = FactoryGirl.create(:technology)
     employment.technologies << tech
     visit "/employments/#{employment.id}/edit"
-    unselect tech.name, from: "employment_technologies"
-    select tech_2.name, from: "employment_technologies"
+    fill_in 'employment_technology_tokens', with: tech_2.id
+    fill_in 'employment_project_tokens', with: ''
     click_button "Update Employment"
     employment.reload
     employment.technologies.should include(tech_2)
     employment.technologies.should_not include(tech)
   end
-  
+
   scenario "Update Employment Projects" do 
-    employment = Employment.last
+    employment = FactoryGirl.create(:employment)
     proj = FactoryGirl.create(:project)
     proj_2 = FactoryGirl.create(:project)
     employment.projects << proj
     visit "/employments/#{employment.id}/edit"
-    unselect proj.name, from: "employment_projects"
-    select proj_2.name, from: "employment_projects"
+    fill_in 'employment_project_tokens', with: proj_2.id
+    fill_in 'employment_technology_tokens', with: ''
     click_button "Update Employment"
     employment.reload
     employment.projects.should include(proj_2)
     employment.projects.should_not include(proj)
   end
-  
+
 end
 
 feature "Resume" do
   include ApplicationHelper
-  
+
   before(:all) do
     10.times { FactoryGirl.create(:employment) }
   end
   after(:all) { Employment.destroy_all }
-  
+
   scenario "Visit Resume page" do
     visit "/resume"
     employment = Employment.all
@@ -177,13 +175,13 @@ feature "Resume" do
       page.html.should include render_markdown(empl.description)
     end
   end
-  
+
 end
 
 feature "View Employment" do
   include ApplicationHelper
-  
-  before(:all) do
+
+  it "should show details of employment" do
     employment = Employment.create({
       company: "Millennium Partners Sports Club Management",
       position: "Web Application Developer",
@@ -195,47 +193,26 @@ feature "View Employment" do
       + Web App for Private Trainers to track sessions with clients
       + gem and backend for Group Ex Scheduling that consumes APIs from CSI SpectrumNG"""
     })
-    technology = Technology.create({
-      name: "Ruby on Rails",
-      description: "Working in Rails for almost 2 years...blah blah blah",
-      abbreviation: "rails"
-    })
-    employment.technologies << technology
-    project = Project.create({
-      name: "Fitness Schedules",
-      description: """Application that allows private trainers to track workouts with clients:
-      + Input exercises for each workout
-      + track date of workout
-      + track completion of workout
-      + Client sign-off on each workout
-      + permanent record and reports for all workouts",
-      short_description: "Application that allows private trainers to track workouts with clients""",
-      source: "Closed"
-    })
-    employment.projects << project
-  end
-  
-  let(:employment) { Employment.where({
-      company: "Millennium Partners Sports Club Management",
-      position: "Web Application Developer"}).last }
-  
-  it "should show details of employment" do
     visit "/employments/#{employment.id}"
     page.should have_text employment.company
     page.html.should include render_markdown(employment.description)
     page.should have_text employment.url
     page.should have_text employment.position
   end
-  
+
   it "should list technologies associated with employment" do
+    employment = FactoryGirl.create(:employment)
+    technology = FactoryGirl.create(:technology)
+    employment.technologies << technology
     visit "/employments/#{employment.id}"
     page.should have_text employment.technologies.first.name
   end
-  
+
   it "should list projects associated with employment" do
+    employment = FactoryGirl.create(:employment)
+    project = FactoryGirl.create(:project)
+    employment.projects << project
     visit "/employments/#{employment.id}" 
     page.should have_text employment.projects.first.name
   end
-  
 end
-    

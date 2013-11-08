@@ -1,5 +1,8 @@
 StuartTerrett::Application.routes.draw do
   
+  get '/technologies/tokens' => 'technologies#tokens'
+  get '/projects/tokens' => 'projects#tokens'
+
   resources :technologies
   
   resources :projects
@@ -18,6 +21,7 @@ StuartTerrett::Application.routes.draw do
   get '/admin/technologies' => 'admin#technologies_index', as: :admin_technologies
   get '/admin/projects' => 'admin#projects_index', as: :admin_projects
   get '/admin/employments' => 'admin#employments_index', as: :admin_employments
+
   
   root 'abouts#show'
   # The priority is based upon order of creation: first created -> highest priority.

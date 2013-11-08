@@ -1,11 +1,11 @@
 class TechnologiesController < ApplicationController
-  
+
   http_basic_authenticate_with name: Auth.username, password: Auth.password, except: [:show, :index]
 
   def new
     @technology = Technology.new
   end
-  
+
   def create
     @technology = Technology.new(tech_params)
     if @technology.save
@@ -16,16 +16,16 @@ class TechnologiesController < ApplicationController
       render 'new'
     end
   end
-  
+
   def show
     @technology = Technology.find(params[:id])
     @projects = @technology.projects
   end
-  
+
   def edit
     @technology = Technology.find(params[:id])
   end
-  
+
   def update
     @technology = Technology.find(params[:id])
     if @technology.update_attributes(tech_params)
@@ -36,13 +36,20 @@ class TechnologiesController < ApplicationController
       render 'edit'
     end
   end
-  
+
   def index
     @technologies = Technology.all
   end
-  
+
+  def tokens
+    @technologies= Technology.where("name like ?", "%#{params[:q]}%")
+    respond_to do |format|
+      format.json { render json: @technologies.map { |project| project.attributes.slice("id", "name") } }
+    end
+  end
+
   def tech_params
     params.require(:technology).permit(:name, :abbreviation, :description)
   end
-  
+
 end

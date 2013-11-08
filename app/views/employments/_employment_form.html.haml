@@ -50,14 +50,14 @@
       %label
         %strong Technologies:
     %div.large-6.columns
-      = f.collection_select :technologies, @technologies, 'id', 'name', { selected: @employment_technology_ids }, { multiple: "multiple" }
+      = f.text_field :technology_tokens, data: { load: @employment.technologies }
     %div.large-3.columns
   %div.row
     %div.large-3.columns
       %label
         %strong Projects:
     %div.large-6.columns
-      = f.collection_select :projects, @projects, 'id', 'name', { selected: @employment_project_ids }, { multiple: "multiple" }
+      = f.text_field :project_tokens, data: { load: @employment.projects }
     %div.large-3.columns
   %div.row
     %div.large-6.large-centered.small-6.small-centered.columns

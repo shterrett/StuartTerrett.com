@@ -29,4 +29,8 @@ StuartTerrett::Application.configure do
   
   # Set SASS as preferred syntax
   config.sass.preferred_syntax = :sass
+
+  silence_warnings do
+    # IRB=pry
+  end
 end

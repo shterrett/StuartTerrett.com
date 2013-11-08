@@ -8,8 +8,14 @@ module AuthHelper
       page.driver.basic_authorize(name, password)
     elsif page.driver.respond_to?(:browser) && page.driver.browser.respond_to?(:basic_authorize)
       page.driver.browser.basic_authorize(name, password)
+    elsif page.driver.browser.respond_to?(:authenticate)
+      page.driver.browser.authenticate(name, password)
     else
-      raise "I don't know how to log in!"
+      page.driver.headers = { 'Authorization' => "Basic #{auth_string}" }
     end
+  end
+
+  def auth_string
+    ["#{Auth.username}:#{Auth.password}"].pack("m*")
   end
 end

@@ -28,8 +28,8 @@ describe Project do
   end
   
   describe "relationships" do
-    
-    it "should have_many technologies" do
+
+   it "should have_many technologies" do
       technology = FactoryGirl.create(:technology)
       project.technologies << technology
       project.save
@@ -43,7 +43,20 @@ describe Project do
       project.reload 
       project.employment.should == employment
     end
-    
+
+    it "returns an array of associated technology ids" do
+      technology = FactoryGirl.create(:technology)
+      project.technologies << technology
+      project.technology_tokens.should == [technology.id]
+      project.technology_ids.should == project.technology_tokens
+    end
+
+    it "parses a string of technolgy ids" do
+      3.times { FactoryGirl.create(:technology) }
+      technology_ids = Technology.all.pluck(:id)
+      project.technology_tokens = technology_ids.join(",")
+      project.technology_ids.should == technology_ids
+    end
   end
   
   describe "source code links" do

@@ -18,14 +18,14 @@
   %div.row
     %div.large-3.columns
       %label
-        %strong Short Description: 
+        %strong Short Description:
     %div.large-6.columns
       = f.text_area :short_description, { placeholder: "Short Description", class: "short"}
     %div.large-3.columns
   %div.row
     %div.large-3.columns
       %label
-        %strong Source: 
+        %strong Source:
     %div.large-6.columns
       =f.text_field :source, { placeholder: "Link to source or \"Closed\"" }
     %div.large-3.columns
@@ -34,7 +34,7 @@
       %label
         %strong Technologies:
     %div.large-6.columns
-      = f.collection_select :technologies, @technologies, 'id', 'name', { selected: @project_technology_ids }, { multiple: "multiple" }
+      = f.text_field :technology_tokens, data: { load: @project.technologies }
     %div.large-3.columns
   %div.row
     %div.large-6.large-centered.small-6.small-centered.columns

@@ -8,12 +8,14 @@ feature "Authentication" do
   end
 
   scenario "Edit Technology should be authenticated" do
-    visit "/technologies/#{Technology.all.first.id}/edit"
+    technology = FactoryGirl.create(:technology)
+    visit "/technologies/#{technology.id}/edit"
     page.status_code.should == 401
   end
 
   scenario "Show Technology should not be authenticated" do
-    visit "/technologies/#{Technology.all.first.id}"
+    technology = FactoryGirl.create(:technology)
+    visit "/technologies/#{technology.id}"
     page.status_code.should == 200
   end
 
@@ -25,10 +27,10 @@ feature "Authentication" do
 end
 
 feature "New Technology" do
-  
+
   include AuthHelper
   before(:each) { http_login }
-  
+
   scenario "visit /technologies/new" do
     visit '/technologies/new'
     page.should have_field "Name"
@@ -36,7 +38,7 @@ feature "New Technology" do
     page.should have_field "technology_description"
     page.should have_button "Create Technology"
   end
-  
+
   scenario "create new technology" do
     visit '/technologies/new'
     fill_in "Name", with: "Ruby"
@@ -46,38 +48,37 @@ feature "New Technology" do
     end.to change(Technology, :count).by(1)
     page.should have_text "Technology created successfully"
   end
-  
-end    
+
+end
 
 feature "Edit Technology" do
   before(:all) { FactoryGirl.create(:technology) }
- 
+
   include AuthHelper
   before(:each) { http_login }
 
   scenario "visit /technologies/:id/edit" do
-    tech = Technology.all.first
-    id = tech.id
-    visit "/technologies/#{id}/edit"
+    technology = FactoryGirl.create(:technology)
+    visit "/technologies/#{technology.id}/edit"
     page.should have_field "Name"
     page.should have_field "Abbreviation"
     page.should have_button "Update Technology"
   end
-  
+
   scenario "edit technology" do
-    tech = Technology.all.first
-    visit "/technologies/#{tech.id}/edit"
+    technology = FactoryGirl.create(:technology)
+    visit "/technologies/#{technology.id}/edit"
     fill_in "Name", with: "EditedName"
     fill_in "Abbreviation", with: "edits"
     fill_in "technology_description", with: "Test Description"
     click_button "Update Technology"
-    new_tech = Technology.find(tech.id)
-    new_tech.name.should == "EditedName"
-    new_tech.description.should == "Test Description"
-    new_tech.abbreviation.should == "edits"
+    new_technology = Technology.find(technology.id)
+    new_technology.name.should == "EditedName"
+    new_technology.description.should == "Test Description"
+    new_technology.abbreviation.should == "edits"
     page.should have_text "Technology updated successfully"
   end
-  
+
 end
 
 feature "View Technology" do
@@ -88,17 +89,17 @@ feature "View Technology" do
     ProjectTech.create({ technology_id: tech.id, project_id: project.id })
     ProjectTech.create({ technology_id: tech.id, project_id: project_2.id })
   end
-  
+
   scenario "visit show technology page" do
-    tech = Technology.all.last
-    visit "/technologies/#{tech.id}"
-    page.should have_text tech.name
-    page.should have_text tech.description
-    tech.projects.each do |proj|
+    technology = FactoryGirl.create(:technology)
+    visit "/technologies/#{technology.id}"
+    page.should have_text technology.name
+    page.should have_text technology.description
+    technology.projects.each do |proj|
       page.should have_link proj.name, href: project_path(proj)
     end
   end
-  
+
   scenario "visit technology index page" do
     techs = Technology.all
     visit "/technologies/"
@@ -106,6 +107,5 @@ feature "View Technology" do
       page.should have_link tech.name, href: technology_path(tech)
     end
   end
-  
+
 end
-  

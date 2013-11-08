@@ -15,5 +15,13 @@ class Project < ActiveRecord::Base
       "<a href='#{self.source}'>View Source</a>".html_safe
     end
   end
-  
+
+  def technology_tokens=(token_string)
+    self.technology_ids = token_string.split(",")
+  end
+
+  def technology_tokens
+    self.technology_ids
+  end
+
 end
