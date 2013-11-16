@@ -1,61 +1,53 @@
 require 'spec_helper'
 
-feature "Authentication" do
+feature 'Authentication' do
 
-  scenario "Edits should be authenticated" do
-    visit "/about/edit"
+  scenario 'Edits should be authenticated' do
+    visit '/about/edit'
     page.status_code.should == 401
   end
-  
-  scenario "Show should not be authenticated" do
-    visit "/about-me"
+
+  scenario 'Show should not be authenticated' do
+    visit '/about-me'
     page.status_code.should == 200
   end
 
 end
 
-feature "Create About" do
+feature 'Create About' do
   include AuthHelper
 
   before(:each) { About.all.destroy_all }
 
-  scenario "visit / before About has been created" do
+  scenario 'visit / before About has been created' do
     expect do
       visit root_path
     end.to change(About, :count).by(1)
     page.status_code.should == 200
   end
-  
-  scenario "visit /about/edit before About has been created" do
-    http_login 
+
+  scenario 'visit /about/edit before About has been created' do
+    http_login
     expect do
-      visit "/about/edit"
+      visit '/about/edit'
     end.to change(About, :count).by(1)
     page.status_code.should == 200
   end
 
 end
-feature "Edit About" do
- include AuthHelper
+feature 'Edit About' do
 
-  before(:each) { http_login }
+  scenario 'update About' do
+    about_text = 'A little about me'
+    about = about_on_page(about_text)
 
-  scenario "visit /about/edit" do
-    visit "/about/edit"
-    page.should have_field "about_info"
-    page.should have_button "Update About"
-  end
-  
-  scenario "update About" do
-    visit '/about/edit'
-    text = "This is a little bit about me"
-    fill_in "about_info", with: text
-    click_button "Update About"
-    About.find(1).info.should == text
-    page.should have_text text
+    about.edit
+    about.view
+
+    about.should have_body(about_text)
   end
 
+  def about_on_page(text)
+    AboutOnPage.new(text)
+  end
 end
-
-
-    
