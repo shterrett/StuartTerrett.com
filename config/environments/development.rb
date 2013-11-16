@@ -14,7 +14,10 @@ StuartTerrett::Application.configure do
   config.action_controller.perform_caching = false
 
   # Don't care if the mailer can't send.
-  config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.asset_host = 'stuart_terrett.dev'
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.default_url_options = { host: 'stuart_terrett.dev', only_path: false }
+  config.action_mailer.delivery_method = :letter_opener
 
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
@@ -26,7 +29,7 @@ StuartTerrett::Application.configure do
   # This option may cause significant delays in view rendering with a large
   # number of complex assets.
   config.assets.debug = true
-  
+
   # Set SASS as preferred syntax
   config.sass.preferred_syntax = :sass
 

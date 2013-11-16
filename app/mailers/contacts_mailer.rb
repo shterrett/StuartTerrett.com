@@ -7,5 +7,5 @@ class ContactsMailer < ActionMailer::Base
     @contact = contact_form
     mail(subject: @contact.subject, reply_to: @contact.email)
   end
- 
+
 end

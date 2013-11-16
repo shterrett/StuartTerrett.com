@@ -1,28 +1,31 @@
 StuartTerrett::Application.routes.draw do
-  
+
   get '/technologies/tokens' => 'technologies#tokens'
   get '/projects/tokens' => 'projects#tokens'
 
   resources :technologies
-  
+
   resources :projects
-  
+
   resources :employments
   get '/resume' => 'employments#index', as: :resume
-  
+
   resources :contacts, only: [:new, :create]
   get '/contact-me' => 'contacts#new', as: :contact_me
-  
+
   resources :abouts, only: [:show, :update]
   get '/about-me' => 'abouts#show', as: :about_me
   get '/about/edit' => 'abouts#edit', as: :about_edit
-  
+
   get '/admin' => 'admin#admin', as: :admin
   get '/admin/technologies' => 'admin#technologies_index', as: :admin_technologies
   get '/admin/projects' => 'admin#projects_index', as: :admin_projects
   get '/admin/employments' => 'admin#employments_index', as: :admin_employments
 
-  
+  if Rails.env.development?
+    mount MailPreview => 'mail_view'
+  end
+
   root 'abouts#show'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
