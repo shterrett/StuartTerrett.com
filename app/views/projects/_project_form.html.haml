@@ -34,7 +34,7 @@
       %label
         %strong Technologies:
     %div.large-6.columns
-      = f.text_field :technology_tokens, data: { load: @project.technologies }
+      = f.text_field :technology_tokens, data: { load: @project.technologies.map { |tech| tech.slice(:id, :name) } }
     %div.large-3.columns
   %div.row
     %div.large-6.large-centered.small-6.small-centered.columns
