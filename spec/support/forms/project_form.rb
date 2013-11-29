@@ -22,12 +22,4 @@ class ProjectForm < Form::Base
   def technologies(technologies = [])
     fill_in 'project_technology_tokens', with: ids_of(technologies)
   end
-
-  private
-
-  def ids_of(technologies)
-    technologies.map do |technology|
-      technology.id
-    end.join ','
-  end
 end
