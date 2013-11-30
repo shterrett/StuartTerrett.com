@@ -45,7 +45,7 @@ describe Employment do
     it 'parses a string of technology ids' do
       3.times { FactoryGirl.create(:technology) }
       technology_ids = Technology.all.pluck(:id)
-      employment.technology_tokens = technology_ids.join(",")
+      employment.technology_tokens = technology_ids.join(',')
       employment.technology_ids.should == technology_ids
     end
 
@@ -76,17 +76,17 @@ describe Employment do
     let(:employment) { FactoryGirl.build(:employment) }
 
     it 'should format date for the resume as "Month Year"' do
-      employment.start_date = DateTime.parse("2000-01-01")
-      employment.end_date = DateTime.parse("2001-12-31")
+      employment.start_date = DateTime.parse('2000-01-01')
+      employment.end_date = DateTime.parse('2001-12-31')
       start_date = employment.format_date(:start_date)
-      start_date.should == "Jan 2000"
+      start_date.should == 'Jan 2000'
       end_date = employment.format_date(:end_date)
-      end_date.should == "Dec 2001"
+      end_date.should == 'Dec 2001'
     end
 
     it 'should format a date earler than 1000AD as "Current"' do
       employment.end_date = DateTime.parse("0001-01-01")
-      employment.format_date(:end_date).should == "Current"
+      employment.format_date(:end_date).should == 'Current'
     end
 
     it 'should give "name" as "position | company"' do

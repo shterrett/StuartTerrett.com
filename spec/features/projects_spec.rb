@@ -1,26 +1,26 @@
 require 'spec_helper'
 
-feature "Authentication" do
+feature 'Authentication' do
 
-  scenario "Projects New should be authenticated" do
-    visit "/projects/new"
+  scenario 'Projects New should be authenticated' do
+    visit '/admin/projects/new'
     page.status_code.should == 401
   end
 
-  scenario "Projects Edit should be authenticated" do
+  scenario 'Projects Edit should be authenticated' do
     project = FactoryGirl.create(:project)
-    visit "/projects/#{project.id}/edit"
+    visit "/admin/projects/#{project.id}/edit"
     page.status_code.should == 401
   end
 
-  scenario "Projects Show should not be authenticated" do
+  scenario 'Projects Show should not be authenticated' do
     project = FactoryGirl.create(:project)
     visit "/projects/#{project.id}"
     page.status_code.should == 200
   end
 
-  scenario "Projects Index should not be authenticated" do
-    visit "/projects"
+  scenario 'Projects Index should not be authenticated' do
+    visit '/projects'
     page.status_code.should == 200
   end
 

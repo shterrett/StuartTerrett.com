@@ -5,7 +5,7 @@ class TechnologyOnPage < PageObject::Base
 
   def create(&block)
     http_login
-    visit new_technology_path
+    visit new_admin_technology_path
     fill_in_form(&block)
     click_button 'Create Technology'
     @technology = Technology.last
@@ -13,7 +13,7 @@ class TechnologyOnPage < PageObject::Base
 
   def edit(&block)
     http_login
-    visit edit_technology_path @technology
+    visit edit_admin_technology_path @technology
     fill_in_form(&block)
     click_button 'Update Technology'
   end

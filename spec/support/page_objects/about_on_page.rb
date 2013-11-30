@@ -9,12 +9,8 @@ class AboutOnPage < PageObject::Base
 
   def edit
     http_login
-    visit about_edit_path
+    visit edit_admin_about_path
     fill_in_form
-  end
-
-  def view
-    visit about_me_path
   end
 
   def has_body?(text)

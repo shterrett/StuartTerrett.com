@@ -3,13 +3,13 @@ require 'spec_helper'
 feature 'Authentication' do
 
   scenario 'New Technology should be authenticated' do
-    visit '/technologies/new'
+    visit '/admin/technologies/new'
     page.status_code.should == 401
   end
 
   scenario 'Edit Technology should be authenticated' do
     technology = FactoryGirl.create(:technology)
-    visit "/technologies/#{technology.id}/edit"
+    visit "/admin/technologies/#{technology.id}/edit"
     page.status_code.should == 401
   end
 

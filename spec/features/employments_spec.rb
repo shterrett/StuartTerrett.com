@@ -3,13 +3,13 @@ require 'spec_helper'
 feature 'Authentication' do
 
   scenario 'New Employment should be authenticated' do
-    visit '/employments/new'
+    visit '/admin/employments/new'
     page.status_code.should == 401
   end
 
   scenario 'Edit Employments should be authenticated' do
     employment = FactoryGirl.create(:employment)
-    visit "/employments/#{employment.id}/edit"
+    visit "/admin/employments/#{employment.id}/edit"
     page.status_code.should == 401
   end
 

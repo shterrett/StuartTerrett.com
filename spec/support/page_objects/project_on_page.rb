@@ -13,7 +13,7 @@ class ProjectOnPage < PageObject::Base
 
   def create(&block)
     http_login
-    visit new_project_path
+    visit new_admin_project_path
     fill_in_form &block
     click_button 'Create Project'
     @project = Project.last
@@ -21,7 +21,7 @@ class ProjectOnPage < PageObject::Base
 
   def edit(&block)
     http_login
-    visit edit_project_path(@project)
+    visit edit_admin_project_path(@project)
     fill_in_form &block
     click_button 'Update Project'
   end
@@ -58,7 +58,7 @@ class ProjectOnPage < PageObject::Base
 
   def has_associated_technologies_on_edit?
     http_login
-    visit edit_project_path(@project)
+    visit edit_admin_project_path(@project)
     technologies = @project.technologies.map { |tech| tech.slice(:id, :name) }
     has_css?("[data-load ='#{technologies.to_json}']")
   end

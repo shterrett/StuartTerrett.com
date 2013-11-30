@@ -5,7 +5,7 @@
     %h1 Edit "About Me"
 
   %section
-    = form_for @about do |f|
+    = form_for [:admin, @about] do |f|
       %div.row
         %div.large-8.large-centered.small-10.small-centered.columns
           = f.text_area :info, { class: "long" }

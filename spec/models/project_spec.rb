@@ -51,7 +51,7 @@ describe Project do
     it 'parses a string of technolgy ids' do
       3.times { FactoryGirl.create(:technology) }
       technology_ids = Technology.all.pluck(:id)
-      project.technology_tokens = technology_ids.join(",")
+      project.technology_tokens = technology_ids.join(',')
       project.technology_ids.should == technology_ids
     end
   end
@@ -65,7 +65,7 @@ describe Project do
 
     it 'should return "Closed Source" if source is "Closed" or does not exist' do
       project = FactoryGirl.create(:closed_project)
-      project.source_link.should == "Closed Source"
+      project.source_link.should == 'Closed Source'
     end
   end
 end

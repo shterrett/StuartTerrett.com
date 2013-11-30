@@ -15,7 +15,7 @@ class EmploymentOnPage < PageObject::Base
 
   def create(&block)
     http_login
-    visit new_employment_path
+    visit new_admin_employment_path
     fill_in_form &block
     click_button 'Create Employment'
     @employment = Employment.last
@@ -23,7 +23,7 @@ class EmploymentOnPage < PageObject::Base
 
   def edit(&block)
     http_login
-    visit edit_employment_path(@employment)
+    visit edit_admin_employment_path(@employment)
     fill_in_form &block
     click_button 'Update Employment'
   end

@@ -3,7 +3,7 @@ require 'spec_helper'
 feature 'Authentication' do
 
   scenario 'Edits should be authenticated' do
-    visit '/about/edit'
+    visit '/admin/about/edit'
     page.status_code.should == 401
   end
 
@@ -26,10 +26,10 @@ feature 'Create About' do
     page.status_code.should == 200
   end
 
-  scenario 'visit /about/edit before About has been created' do
+  scenario 'edit before About has been created' do
     http_login
     expect do
-      visit '/about/edit'
+      visit edit_admin_about_path
     end.to change(About, :count).by(1)
     page.status_code.should == 200
   end
@@ -42,7 +42,7 @@ feature 'Edit About' do
     about = about_on_page(about_text)
 
     about.edit
-    about.view
+    about.view_about
 
     about.should have_body(about_text)
   end

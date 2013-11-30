@@ -1,0 +1,4 @@
+%ul.edit_list
+  - models.each do |model|
+    %li
+      = link_to model.name, "/admin/#{type}/#{model.id}/edit"
