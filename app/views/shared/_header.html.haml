@@ -1,23 +1,26 @@
 %nav.top-bar
   %ul.title-area
     %li.name Stuart Terrett
-    %li.toggle-topbar.menu-icon 
-      %a(href="#")
+    %li.toggle-topbar.menu-icon
+      %a(href='#')
         %span
   %section.top-bar-section
     %ul.left
       %li.divider
       %li
-        = link_to "About", about_me_path
+        = link_to 'About', about_me_path
       %li.divider
       %li
-        = link_to "Projects", projects_path
+        = link_to 'Projects', projects_path
       %li.divider
       %li
-        = link_to "Technologies", technologies_path
+        = link_to 'Technologies', technologies_path
       %li.divider
       %li
-        = link_to "Resumé", resume_path
-      %li.divider        
+        = link_to 'Resumé', resume_path
+      %li.divider
       %li
-        = link_to "Contact", contact_me_path
+        = link_to 'Contact', contact_me_path
+      %li.divider
+      %li
+        = link_to 'Blog', blog_posts_path

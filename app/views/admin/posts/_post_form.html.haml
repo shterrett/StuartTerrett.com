@@ -1,0 +1,18 @@
+= form_for [:admin, post] do |f|
+  %div.row
+    %div.large-3.columns
+      %strong Title:
+    %div.large-6.columns
+      = f.text_field :title, { placeholder: 'Title' }
+    %div.large-3.columns
+  %div.row
+    %div.large-3.columns
+      %strong Title:
+    %div.large-6.columns
+      = f.text_area :body, { placeholder: 'Body' }
+      %aside.instruction
+        This field accepts Markdown formatted text
+    %div.large-3.columns
+  %div.row
+    %div.large-6.large-centered.small-6.small-centered.columns
+      = f.submit

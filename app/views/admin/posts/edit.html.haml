@@ -1,0 +1,8 @@
+= content_for(:title) { 'Edit Post' }
+
+%section
+  %header
+    %h1= "Edit #{@post.title}"
+
+  %section
+    = render 'post_form', post: @post

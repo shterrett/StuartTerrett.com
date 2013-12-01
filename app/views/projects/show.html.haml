@@ -2,9 +2,9 @@
 
 %section
   %header
-    %h1 
+    %h1
       = @project.name
-  
+
   %section
     %div.row
       %div.small-12.large-8.columns
@@ -14,4 +14,3 @@
           = @project.source_link
       %div.small-12.large-4.columns
         = render "technologies/technology_list", technologies: @technologies, title: "Technologies Used:"
- 

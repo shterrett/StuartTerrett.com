@@ -1,0 +1,12 @@
+= content_for(:title) { 'Edit Posts' }
+
+%section.admin.edit
+  %header
+    %h1
+      Choose Post to Edit
+
+  %section
+    %ul
+      - @posts.each do |post|
+        %li
+          = link_to post.title, edit_admin_post_path(post)

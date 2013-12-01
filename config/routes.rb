@@ -8,6 +8,10 @@ StuartTerrett::Application.routes.draw do
   resources :employments, only: [:index, :show]
   resource :about, only: [:show]
 
+  namespace :blog do
+    resources :posts, only: [:index]
+  end
+
   resource :admin, only: [:show]
   namespace :admin do
     resources :technologies,
@@ -17,6 +21,7 @@ StuartTerrett::Application.routes.draw do
     resources :employments,
       only: [:index, :new, :create, :edit, :update]
     resource :about, only: [:edit, :update]
+    resources :posts, only: [:index, :new, :create, :edit, :update]
   end
 
   get '/resume' => 'employments#index', as: :resume

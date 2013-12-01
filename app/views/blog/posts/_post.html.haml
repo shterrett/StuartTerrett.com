@@ -1,0 +1,7 @@
+%li.post
+  %header
+    %h1
+      = post.title
+
+  %article.md
+    = render_markdown(post.body)

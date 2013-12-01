@@ -28,4 +28,9 @@ FactoryGirl.define do
       technology.projects << FactoryGirl.create(:project)
     end
   end
+
+  factory :post do
+    sequence(:title) { |n| "Blog Post #{n}" }
+    body "Wouldn't that bring about chaos? Ensign Babyface! Flair is what marks the difference between artistry and mere competence. Damage report! You did exactly what you had to do. You considered all your options, you tried every alternative and then you made the hard choice. Some days you get the bear, and some days the bear gets you. Maybe if we felt any human loss as keenly as we feel one of those close to us, human history would be far less bloody. The look in your eyes, I recognize it. You used to have it for me. Mr. Worf, you sound like a man who's asking his friend if he can start dating his sister. I can't. As much as I care about you, my first duty is to the ship. Now we know what they mean by 'advanced' tactical training. Besides, you look good in a dress."
+  end
 end

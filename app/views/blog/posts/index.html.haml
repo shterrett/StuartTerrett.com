@@ -1,0 +1,9 @@
+= content_for(:title) { 'Blog' }
+
+%section.blog
+  %header
+    %h1 The Blog
+
+  %ul.posts
+    - @posts.each do |post|
+      = render post

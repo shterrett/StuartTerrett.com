@@ -7,20 +7,22 @@
   %section
     %div.row
       %div.large-4.small-6.columns
-        = link_to "Add Technology", new_admin_technology_path
+        = link_to 'Add Technology', new_admin_technology_path
       %div.large-4.small-6.columns
-        = link_to "Add Project", new_admin_project_path
+        = link_to 'Add Project', new_admin_project_path
       %div.large-4.small-12.columns
-        = link_to "Add Employment", new_admin_employment_path
+        = link_to 'Add Employment', new_admin_employment_path
     %div.row
       %div.large-4.small-6.columns
-        = link_to "Edit Technology", admin_technologies_path
+        = link_to 'Edit Technology', admin_technologies_path
       %div.large-4.small-6.columns
-        = link_to "Edit Project", admin_projects_path
+        = link_to 'Edit Project', admin_projects_path
       %div.large-4.small-12.columns
-        = link_to "Edit Employment", admin_employments_path
+        = link_to 'Edit Employment', admin_employments_path
     %div.row
-      %div.large-4.small-0.columns
+      %div.large-4.small-6.columns
+        = link_to 'Add Post', new_admin_post_path
+      %div.large-4.small-6.columns
+        = link_to 'Edit Post', admin_posts_path
       %div.large-4.small-12.columns
-        = link_to "Edit About Me", edit_admin_about_path
-      %div.large-4.small-0.columns
+        = link_to 'Edit About Me', edit_admin_about_path

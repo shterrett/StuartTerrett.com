@@ -1,0 +1,8 @@
+= content_for(:title) { 'New Post' }
+
+%section
+  %header
+    %h1 New Blog Post
+
+  %section
+    = render 'post_form', post: @post
