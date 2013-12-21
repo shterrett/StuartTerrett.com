@@ -4,4 +4,4 @@
       = post.title
 
   %article.md
-    = render_markdown(post.body)
+    = find_and_preserve(render_markdown(post.body))
