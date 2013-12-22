@@ -57,6 +57,7 @@ group :development, :test do
   gem 'database_cleaner'
   gem 'letter_opener'
   gem 'email_spec'
+  gem 'timecop'
 end
 
 group :production do
