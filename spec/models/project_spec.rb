@@ -27,6 +27,29 @@ describe Project do
 
   end
 
+  describe 'default sort order' do
+
+    it 'should sort descending by updated_at' do
+      Timecop.travel 2.weeks.ago do
+        FactoryGirl.create(:project, name: 'young project')
+      end
+      Timecop.travel 4.weeks.ago do
+        FactoryGirl.create(:project, name: 'old project')
+      end
+      updated_project = FactoryGirl.build(:project, name: 'oldest project')
+      Timecop.travel 6.weeks.ago do
+        updated_project.save
+      end
+      Timecop.travel 1.day.ago do
+        updated_project.name = 'updated project'
+        updated_project.save
+      end
+
+      expect(Project.all.pluck(:name)).to eq ['updated project', 'young project', 'old project']
+    end
+
+  end
+
   describe 'relationships' do
 
    it 'should have_many technologies' do

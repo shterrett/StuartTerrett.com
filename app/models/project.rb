@@ -8,6 +8,8 @@ class Project < ActiveRecord::Base
   has_many :technologies, through: :project_techs
   belongs_to :employment
 
+  default_scope order(updated_at: :desc)
+
   def source_link
     if self.source.blank? || self.source.downcase == 'closed'
       'Closed Source'
